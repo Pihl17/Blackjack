@@ -3,8 +3,8 @@
 public class Table
 {
 
-    CardDeck deck;
-    Gambler player;
+    public CardDeck deck;
+    public Gambler player;
 
     public Table()
 	{

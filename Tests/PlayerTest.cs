@@ -36,5 +36,11 @@ namespace Tests
             Assert.AreEqual(expected, result);
         }
 
+        [TestMethod]
+        public void Hit_AutoEndsTurnOnBust()
+        {
+            Assert.Fail();
+        }
+
     }
 }
