@@ -31,8 +31,13 @@ public class CardDeck
 				cards.Push(new Card(i));
 			}
 		}
-		//TODO: Shuffle cards
+		Shuffle();
     }
+
+	public void Shuffle()
+	{
+		cards = new Stack<Card>(cards.Shuffle());
+	}
 
 	public Card DrawCard()
 	{
