@@ -4,12 +4,12 @@ public class Table
 {
 
     CardDeck deck;
-    Player player;
+    Gambler player;
 
     public Table()
 	{
         deck = new CardDeck();
-        player = new Player(deck);
+        player = new Gambler(deck);
     }
 
     public void StartRound()
