@@ -13,13 +13,18 @@ public struct Card
 public class CardDeck
 {
 
-	Stack<Card> cards = new Stack<Card>(52);
+	public Stack<Card> cards = new Stack<Card>(52);
 
 	public int Count { get { return cards.Count; } }
 	
 	public CardDeck()
 	{
 		InstantiateDeck();
+	}
+
+	public CardDeck(Stack<Card> cards)
+	{
+		this.cards = cards;
 	}
 
 	void InstantiateDeck()
@@ -31,7 +36,6 @@ public class CardDeck
 				cards.Push(new Card(i));
 			}
 		}
-		Shuffle();
     }
 
 	public void Shuffle()

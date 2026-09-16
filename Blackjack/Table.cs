@@ -14,6 +14,7 @@ public class Table
 
     public void StartRound()
     {
+        deck.Shuffle();
         player.Hit(deck.DrawCard());
         player.StartTurn();
     }
