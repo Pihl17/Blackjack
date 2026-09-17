@@ -1,6 +1,7 @@
 ﻿using System;
 
 public enum FaceCard { Ace = 1, Jack = 11, Queen = 12, King = 13 }
+public enum CardType { Numbered, Face, Ace }
 public struct Card
 {
     public int rank;
@@ -8,6 +9,17 @@ public struct Card
     {
         this.rank = rank;
     }
+	public CardType type
+	{
+		get
+		{
+			if (rank == 1)
+				return CardType.Ace;
+			if (rank >= 11)
+				return CardType.Face;
+			return CardType.Numbered;
+		}
+	}
 }
 
 public class CardDeck
