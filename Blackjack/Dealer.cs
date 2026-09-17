@@ -2,7 +2,7 @@
 
 public class Dealer : Player
 {
-	public Dealer(CardDeck deck) : base(deck) { }
+	public Dealer() : base() { }
 
 
 

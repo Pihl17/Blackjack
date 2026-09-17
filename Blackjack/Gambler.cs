@@ -4,7 +4,7 @@ using System.Text;
 
 public class Gambler : Player
 {
-    public Gambler(CardDeck deck) : base(deck) { }
+    public Gambler() : base() { }
 
     public void StartTurn()
     {
@@ -16,7 +16,7 @@ public class Gambler : Player
             input = Console.ReadKey(true);
             if (input.Key == ConsoleKey.H)
             {
-                Hit(deck.DrawCard());
+                Hit(Table.Current.deck.DrawCard());
             }
             if (input.Key == ConsoleKey.C)
             {

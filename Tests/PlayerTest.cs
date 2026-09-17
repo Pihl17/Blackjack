@@ -9,7 +9,7 @@ namespace Tests
         public void Hit_AddsCardToHand()
         {
             List<Card> expected = new List<Card>() { new Card(1) };
-            Player player = new Player(new CardDeck());
+            Player player = new Player();
 
             player.Hit(new Card(1));
 
@@ -20,7 +20,7 @@ namespace Tests
         public void PrintHand_PrintsOutThePlayersCurrentHand()
         {
             string expected = "Your current hand is: 13 1";
-            Player player = new Player(new CardDeck()) { 
+            Player player = new Player() { 
                 hand = new List<Card>() { 
                     new Card(13), 
                     new Card(1) 

@@ -7,8 +7,9 @@ internal class Program
 
     static void Main(string[] args)
     {
-        Table theTable = new Table();
-        theTable.StartRound();
+        Table.Current.StartRound();
+        //Table theTable = new Table();
+        //theTable.StartRound();
     }   
 
 }

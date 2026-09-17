@@ -7,12 +7,7 @@ public class Player
 
 	public List<Card> hand = new List<Card>();
 
-    protected CardDeck deck;
-
-	public Player(CardDeck deck)
-	{
-        this.deck = deck;
-	}
+	public Player() { }
 
 	public void Hit(Card card)
 	{
