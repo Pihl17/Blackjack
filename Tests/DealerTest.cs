@@ -19,7 +19,8 @@ public class DealerTest
             .Returns(new Card(3))
             .Returns(new Card(6))
             .Returns(new Card(4))
-            .Returns(new Card(1));
+            .Returns(new Card(1))
+            .Throws(new InvalidOperationException());
         Table.Current.deck = mockDeck.Object;
 
         dealer.Turn(playerScore);
@@ -41,6 +42,12 @@ public class DealerTest
         bool result = dealer.ShouldHit(dealerScore, playerScore);
 
         Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void ShouldStandWhenHaving17Plus()
+    {
+        Assert.Fail();
     }
 
     [TestMethod]
@@ -68,6 +75,12 @@ public class DealerTest
         bool result = dealer.ShouldHit(dealerScore, playerScore);
 
         Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void BustsWhenOver21Score()
+    {
+        Assert.Fail();
     }
 
 
