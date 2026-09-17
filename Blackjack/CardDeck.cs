@@ -55,7 +55,7 @@ public class CardDeck
 		cards = new Stack<Card>(cards.Shuffle());
 	}
 
-	public Card DrawCard()
+	public virtual Card DrawCard()
 	{
 		return cards.Pop();
 	}

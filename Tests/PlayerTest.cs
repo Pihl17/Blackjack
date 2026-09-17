@@ -36,8 +36,15 @@ namespace Tests
             Assert.AreEqual(expected, result);
         }
 
+
         [TestMethod]
         public void Hit_AutoEndsTurnOnBust()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Stand_InvokesOnTurnEndDelegate()
         {
             Assert.Fail();
         }

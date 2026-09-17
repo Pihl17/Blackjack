@@ -6,7 +6,7 @@ public class Gambler : Player
 {
     public Gambler() : base() { }
 
-    public void StartTurn()
+    public virtual void StartTurn()
     {
         Console.WriteLine("It is now your turn:");
         Console.WriteLine("Press C to show hand\nPress H to hit \nPress Escape to Stand");
@@ -23,6 +23,8 @@ public class Gambler : Player
                 PrintHand();
             }
         } while (input.Key != ConsoleKey.Escape);
+
+        Stand();
     }
 
 

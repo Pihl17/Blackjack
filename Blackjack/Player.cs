@@ -9,11 +9,20 @@ public class Player
 
 	public Player() { }
 
+    public delegate void OnTurnEndingEvent();
+    public OnTurnEndingEvent OnTurnEnding;
+
 	public void Hit(Card card)
 	{
 		hand.Add(card);
 		Console.WriteLine("You have been dealt a " + card.rank);
 	}
+
+    public void Stand()
+    {
+        Console.WriteLine("You stand with a hand value of " + Scorer.GetHandScore(hand.ToArray()));
+        OnTurnEnding?.Invoke();
+    }
 
     public void PrintHand()
     {
