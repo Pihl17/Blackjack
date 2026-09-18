@@ -4,18 +4,35 @@ public class Dealer : Player
 {
 
 	public bool WillStand { get; private set; } = false;
-	public int highestPlayerHand = 0;
 	
 	public Dealer() : base() { }
 
 	public void StartTurn()
 	{
-		throw new NotImplementedException();
+		while (!WillStand)
+		{
+			MakeDecision();
+		}
+		PrintHand();
+		Stand();
 	}
 
 	public void MakeDecision()
 	{
-        throw new NotImplementedException();
+		int score = Scorer.GetHandScore(hand.ToArray());
+
+		if (score >= 21 || score > Table.Current.highestPlayerHandScore)
+		{
+			WillStand = true;
+			return;
+		}
+		if (score < 17 || Scorer.IsSoft(hand.ToArray()))
+		{
+			Hit(Table.Current.deck.DrawCard());
+			return;
+		}
+
+		WillStand = true;
     }
 
 

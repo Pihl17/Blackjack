@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Moq;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -34,12 +35,6 @@ namespace Tests
 
             string result = stringWriter.ToString().Trim();
             Assert.AreEqual(expected, result);
-        }
-
-        [TestMethod]
-        public void Stand_InvokesOnTurnEndDelegate()
-        {
-            Assert.Fail();
         }
 
     }

@@ -6,6 +6,7 @@ namespace Tests;
 public class DealerTest
 {
     [TestMethod]
+    [DoNotParallelize]
     public void StartTurn_ContinuesToDrawTillConditionsForStandingMet()
     {
         int expectedDraws = 5;
@@ -22,6 +23,7 @@ public class DealerTest
     }
 
     [TestMethod]
+    [DoNotParallelize]
     public void StartTurn_DoesntDrawMoreCardsThanNeeded()
     {
         int expectedDraws = 2;

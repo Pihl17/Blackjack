@@ -78,4 +78,39 @@ public class ScoreTest
 
         CollectionAssert.AreEqual(expected, cards);
     }
+
+    [TestMethod]
+    [DataRow(false, 1, 10, 9)]
+    [DataRow(true, 1, 7)]
+    [DataRow(true, 1, 10)]
+    public void IsSoft_CorrectlyIdentifiesSoftOrHardScores(bool expected, params int[] cardRanks)
+    {
+        Card[] cards = new Card[cardRanks.Length];
+        for (int i = 0; i < cards.Length; i++)
+        {
+            cards[i] = new Card(cardRanks[i]);
+        }
+
+        bool result = Scorer.IsSoft(cards);
+
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    [DataRow(2, 6, 9)]
+    [DataRow(4, 12)]
+    public void IsSoft_IdentifiesHandsWithoutAcesAsHard(params int[] cardRanks)
+    {
+        bool expected = false;
+        Card[] cards = new Card[cardRanks.Length];
+        for (int i = 0; i < cards.Length; i++)
+        {
+            cards[i] = new Card(cardRanks[i]);
+        }
+
+        bool result = Scorer.IsSoft(cards);
+
+        Assert.AreEqual(expected, result);
+    }
+
 }

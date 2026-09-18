@@ -41,5 +41,22 @@ public static class Scorer
         }
     }
 
+    public static bool IsSoft(Card[] cards)
+    {
+        if (!cards.Any(card => card.type == CardType.Ace))
+        {
+            return false;
+        }
+        SortCardHand(cards);
+        int totalScore = 0;
+        foreach (Card card in cards)
+        {
+            if (card.type == CardType.Ace && totalScore + 11 > 21)
+                return false;
+            totalScore.AddCardValue(card);
+        }
+        return true;
+    }
+
 }
 
