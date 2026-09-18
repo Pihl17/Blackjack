@@ -45,4 +45,10 @@ public class TableTest
         Assert.AreEqual(expected, Table.Current.highestPlayerHandScore);
     }
 
+    [TestMethod]
+    public void EndRound_DetermineWinningHands()
+    {
+        Assert.Fail();
+    }
+
 }

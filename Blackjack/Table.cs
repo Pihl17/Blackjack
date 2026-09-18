@@ -26,6 +26,7 @@ public class Table
         dealer = new Dealer();
         player = new Gambler();
         player.OnTurnEnding += StartDealersTurn;
+        dealer.OnTurnEnding += EndRound;
     }
 
     public void StartRound()
@@ -47,6 +48,11 @@ public class Table
         highestPlayerHandScore = Scorer.GetHandScore(player.hand.ToArray());
         Console.WriteLine("\nDealer's turn:");
         dealer.StartTurn();
+    }
+
+    public void EndRound()
+    {
+        throw new NotImplementedException();
     }
 
 }
