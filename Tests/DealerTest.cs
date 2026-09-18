@@ -5,84 +5,119 @@ namespace Tests;
 [TestClass]
 public class DealerTest
 {
+    [TestMethod]
+    public void StartTurn_ContinuesToDrawTillConditionsForStandingMet()
+    {
+        int expectedDraws = 5;
+        Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(8)]);
+        Mock<CardDeck> mock = new Mock<CardDeck>();
+        mock.Setup(deck => deck.DrawCard()).Returns(new Card(2));
+        Table.Current.deck = mock.Object;
+        Table.Current.highestPlayerHandScore = 21;
+
+        dealer.StartTurn();
+
+        mock.Verify(deck => deck.DrawCard(), Times.AtLeast(expectedDraws));
+    }
 
     [TestMethod]
-    public void Turn_HitsUntillHitting17Plus()
+    public void StartTurn_DoesntDrawMoreCardsThanNeeded()
     {
-        int expectedDraws = 4;
-        int playerScore = 21;
+        int expectedDraws = 2;
         Dealer dealer = new Dealer();
-        dealer.hand = new List<Card>() { new Card(4) };
-        Mock<CardDeck> mockDeck = new Mock<CardDeck>();
-        mockDeck.SetupSequence(deck => deck.DrawCard())
-            .Returns(new Card(2))
-            .Returns(new Card(3))
-            .Returns(new Card(6))
-            .Returns(new Card(4))
-            .Returns(new Card(1))
-            .Throws(new InvalidOperationException());
-        Table.Current.deck = mockDeck.Object;
+        dealer.hand = new List<Card>([new Card(10), new Card(4)]);
+        Mock<CardDeck> mock = new Mock<CardDeck>();
+        mock.Setup(deck => deck.DrawCard()).Returns(new Card(2));
+        Table.Current.deck = mock.Object;
+        Table.Current.highestPlayerHandScore = 21;
 
-        dealer.Turn(playerScore);
+        dealer.StartTurn();
 
-        mockDeck.Verify(deck => deck.DrawCard(), Times.Exactly(expectedDraws));
+        mock.Verify(deck => deck.DrawCard(), Times.AtMost(expectedDraws));
+    }
+
+    [TestMethod]
+    public void MakeDecision_HasMoreThan21Points_Stands()
+    {
+        bool expected = true;
+        Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(10), new Card(6), new Card(6)]);
+
+        dealer.MakeDecision();
+
+        Assert.AreEqual(expected, dealer.WillStand);
+    }
+
+    [TestMethod]
+    public void MakeDecision_Has21PointHand_Stands()
+    {
+        bool expected = true;
+        Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(10), new Card(1)]);
+
+        dealer.MakeDecision();
+
+        Assert.AreEqual(expected, dealer.WillStand);
+    }
+
+    [TestMethod]
+    public void MakeDecision_HasMorePointsThanHighestPlayerHand_Stands()
+    {
+        bool expected = true;
+        Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(10), new Card(3)]);
+        Table.Current.highestPlayerHandScore = 12;
+
+        dealer.MakeDecision();
+
+        Assert.AreEqual(expected, dealer.WillStand);
+    }
+
+    [TestMethod]
+    public void MakeDecision_HasHard17PlusHand_Stands()
+    {
+        bool expected = true;
+        Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(10), new Card(7)]);
+        Table.Current.highestPlayerHandScore = 20;
+
+        dealer.MakeDecision();
+
+        Assert.AreEqual(expected, dealer.WillStand);
     }
     
     [TestMethod]
-    [DataRow(7, true)]
-    [DataRow(16, true)]
-    [DataRow(17, false)]
-    [DataRow(18, false)]
-    [DataRow(21, false)]
-    public void ShouldHit_HitsWhenHavingLessThan17InScore(int dealerScore, bool expected)
-    {
-        int playerScore = 21;
-        Dealer dealer = new Dealer();
-
-        bool result = dealer.ShouldHit(dealerScore, playerScore);
-
-        Assert.AreEqual(expected, result);
-    }
-
-    [TestMethod]
-    public void ShouldStandWhenHaving17Plus()
-    {
-        Assert.Fail();
-    }
-
-    [TestMethod]
-    public void ShouldHit_HitsWhenHavingASoft17Plus()
-    {
-        Assert.Fail();
-    }
-
-    [TestMethod]
-    public void ShouldHit_StandWith21()
-    {
-        Assert.Fail();
-    }
-
-    [TestMethod]
-    [DataRow(12, 9, false)]
-    [DataRow(15, 3, false)]
-    [DataRow(10, 10, true)]
-    [DataRow(3, 16, true)]
-    [DataRow(15, 16, true)]
-    public void ShouldHit_StandWithScoreHigherThanPlayer(int dealerScore, int playerScore, bool expected)
+    public void MakeDecision_HasLessThan17Points_Hits()
     {
         Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(10), new Card(6)]);
+        Table.Current.highestPlayerHandScore = 20;
+        Mock<CardDeck> mock = new Mock<CardDeck>();
+        mock.Setup(deck => deck.DrawCard()).Returns(new Card(1));
+        Table.Current.deck = mock.Object;
 
-        bool result = dealer.ShouldHit(dealerScore, playerScore);
+        dealer.MakeDecision();
 
-        Assert.AreEqual(expected, result);
+        mock.Verify(deck => deck.DrawCard(), Times.AtLeastOnce());
     }
 
     [TestMethod]
-    public void BustsWhenOver21Score()
+    [DataRow(6)]
+    [DataRow(7)]
+    [DataRow(9)]
+    public void MakeDecision_HasSoft17Plus_Hits(int otherCardRank)
     {
-        Assert.Fail();
+        Dealer dealer = new Dealer();
+        dealer.hand = new List<Card>([new Card(1), new Card(otherCardRank)]);
+        Table.Current.highestPlayerHandScore = 21;
+        Mock<CardDeck> mock = new Mock<CardDeck>();
+        mock.Setup(deck => deck.DrawCard()).Returns(new Card(1));
+        Table.Current.deck = mock.Object;
+
+        dealer.MakeDecision();
+
+        mock.Verify(deck => deck.DrawCard(), Times.AtLeastOnce());
     }
-
-
 
 }

@@ -18,6 +18,8 @@ public class Table
     public Dealer dealer;
     public Gambler player;
 
+    public int highestPlayerHandScore;
+
     private Table()
 	{
         deck = new CardDeck();
@@ -42,6 +44,7 @@ public class Table
 
     public void StartDealersTurn()
     {
+        highestPlayerHandScore = Scorer.GetHandScore(player.hand.ToArray());
         Console.WriteLine("\nDealer's turn:");
         dealer.StartTurn();
     }

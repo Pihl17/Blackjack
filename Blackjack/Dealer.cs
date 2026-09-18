@@ -2,30 +2,21 @@
 
 public class Dealer : Player
 {
+
+	public bool WillStand { get; private set; } = false;
+	public int highestPlayerHand = 0;
+	
 	public Dealer() : base() { }
 
 	public void StartTurn()
 	{
-		Turn(Scorer.GetHandScore(Table.Current.player.hand.ToArray()));
+		throw new NotImplementedException();
 	}
 
-	public void Turn(int playerScore)
+	public void MakeDecision()
 	{
-        while (ShouldHit(Scorer.GetHandScore(hand.ToArray()), playerScore))
-        {
-            Hit(Table.Current.deck.DrawCard());
-        }
-        PrintHand();
-        Stand();
+        throw new NotImplementedException();
     }
-
-
-	public bool ShouldHit(int ownScore, int opponentScore)
-	{
-		return ownScore < 17 && ownScore <= opponentScore;
-	}
-
-
 
 
 }
