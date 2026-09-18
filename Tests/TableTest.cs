@@ -31,4 +31,18 @@ public class TableTest
         Assert.HasCount(expectedDealerHand, Table.Current.dealer.hand, "Dealer hand count assertion failed");
     }
 
+    [TestMethod]
+    [DoNotParallelize]
+    public void StartDealersTurn_SetsHighestPlayerHandScore()
+    {
+        int expected = 21;
+        Gambler player = new Gambler();
+        player.hand = [new Card(1), new Card(13)];
+        Table.Current.player = player;
+
+        Table.Current.StartDealersTurn();
+
+        Assert.AreEqual(expected, Table.Current.highestPlayerHandScore);
+    }
+
 }
