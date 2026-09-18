@@ -4,28 +4,39 @@ using System.Text;
 
 public class Gambler : Player
 {
+
+    Input input = new Input();
+    
     public Gambler() : base() { }
+
+    public Gambler(Input input)
+    {
+        this.input = input;
+    }
 
     public virtual void StartTurn()
     {
         Console.WriteLine("It is now your turn:");
-        Console.WriteLine("Press C to show hand\nPress H to hit \nPress Escape to Stand");
-        ConsoleKeyInfo input;
+        Console.WriteLine("Press C to show hand\nPress H to hit \nPress S to Stand");
+        ConsoleKeyInfo inputInfo;
         do
         {
-            input = Console.ReadKey(true);
-            if (input.Key == ConsoleKey.H)
+            inputInfo = input.ReadKey();
+            if (inputInfo.Key == ConsoleKey.H)
             {
                 Hit(Table.Current.deck.DrawCard());
+                if (Scorer.GetHandScore(hand.ToArray()) > 21)
+                    break;
             }
-            if (input.Key == ConsoleKey.C)
+            if (inputInfo.Key == ConsoleKey.C)
             {
                 PrintHand();
             }
-        } while (input.Key != ConsoleKey.Escape);
+        } while (inputInfo.Key != ConsoleKey.S);
 
         Stand();
     }
+
 
 
 }
