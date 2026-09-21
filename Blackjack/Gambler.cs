@@ -19,22 +19,22 @@ public class Gambler : Player
 
     public virtual void StartTurn()
     {
+        Console.WriteLine("--------------------");
         Console.WriteLine("It is now your turn:");
-        Console.WriteLine("Press C to show hand\nPress H to hit \nPress S to Stand");
         ConsoleKeyInfo inputInfo;
         do
         {
+            Console.WriteLine();
+            PrintHand();
+            PrintCurrentHandScore();
+            Console.WriteLine("\nOptions:\nH - hit\nS - Stand\n");
+            
             inputInfo = input.ReadKey();
             if (inputInfo.Key == ConsoleKey.H)
             {
                 Hit(Table.Current.deck.DrawCard());
                 if (Scorer.GetHandScore(hand.ToArray()) == Scorer.BustScore)
                     break;
-            }
-            if (inputInfo.Key == ConsoleKey.C)
-            {
-                PrintHand();
-                PrintCurrentHandScore();
             }
         } while (inputInfo.Key != ConsoleKey.S);
 

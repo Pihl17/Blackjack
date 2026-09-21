@@ -31,6 +31,10 @@ public class Table
 
     public void StartRound()
     {
+        Console.WriteLine("-----------");
+        Console.WriteLine("Round Start");
+        Console.WriteLine("-----------\n");
+
         deck.Shuffle();
         DealStartHands();
         player.StartTurn();
@@ -38,15 +42,20 @@ public class Table
 
     void DealStartHands()
     {
+        Console.WriteLine("Dealing out start hands:");
         player.Hit(deck.DrawCard());
         dealer.Hit(deck.DrawCard());
         player.Hit(deck.DrawCard());
+        Console.WriteLine();
+        player.PrintHand();
+        dealer.PrintHand();
     }
 
     public void StartDealersTurn()
     {
         highestPlayerHandScore = Scorer.GetHandScore(player.hand.ToArray());
-        Console.WriteLine("\nDealer's turn:");
+        Console.WriteLine("\n--------------");
+        Console.WriteLine("Dealer's turn:");
         dealer.StartTurn();
     }
 
@@ -55,6 +64,7 @@ public class Table
         int dealerScore = Scorer.GetHandScore(dealer.hand.ToArray());
         int outcome = CompareHands(dealerScore, player.hand.ToArray());
 
+        Console.WriteLine();
         switch (outcome)
         {
             case 1:
