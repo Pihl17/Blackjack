@@ -1,6 +1,5 @@
 ﻿using System;
 
-public enum FaceCard { Ace = 1, Jack = 11, Queen = 12, King = 13 }
 public enum CardType { Numbered, Face, Ace }
 public struct Card
 {
@@ -20,6 +19,24 @@ public struct Card
 			return CardType.Numbered;
 		}
 	}
+	public string RankName { get
+		{
+			switch (rank)
+			{
+				case 1:
+					return "A";
+				case 11:
+					return "J";
+				case 12:
+					return "Q";
+				case 13:
+					return "K";
+				default:
+					return rank.ToString();
+			}
+		} 
+	}
+
 }
 
 public class CardDeck

@@ -5,7 +5,9 @@ public class Dealer : Player
 
 	public bool WillStand { get; private set; } = false;
 	
-	public Dealer() : base() { }
+	public Dealer() : base() {
+		name = "The dealer";
+	}
 
 	public void StartTurn()
 	{

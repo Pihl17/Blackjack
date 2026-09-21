@@ -7,11 +7,14 @@ public class Gambler : Player
 
     Input input = new Input();
     
-    public Gambler() : base() { }
+    public Gambler() : base() {
+        name = "You";
+    }
 
     public Gambler(Input input)
     {
         this.input = input;
+        name = "You";
     }
 
     public virtual void StartTurn()

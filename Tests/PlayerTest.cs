@@ -18,23 +18,23 @@ namespace Tests
         }
 
         [TestMethod]
-        public void PrintHand_PrintsOutThePlayersCurrentHand()
+        [DoNotParallelize]
+        [DataRow("K A", 13, 1)]
+        [DataRow("J Q", 11, 12)]
+        [DataRow("10 6", 10, 6)]
+        [DataRow("9 J", 9, 11)]
+        public void PrintHand_PrintsOutThePlayersCurrentHand(string expected, params int[] cardRanks)
         {
-            string expected = "Your current hand is: 13 1";
-            Player player = new Player() { 
-                hand = new List<Card>() { 
-                    new Card(13), 
-                    new Card(1) 
-                } 
-            };
-            Console.WriteLine();
+            Player player = new Player();
+            for (int i = 0; i < cardRanks.Length; i++)
+                player.hand.Add(new Card(cardRanks[i]));
             StringWriter stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
 
             player.PrintHand();
 
             string result = stringWriter.ToString().Trim();
-            Assert.AreEqual(expected, result);
+            Assert.Contains(expected, result);
         }
 
     }
