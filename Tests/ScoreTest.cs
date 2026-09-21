@@ -44,9 +44,26 @@ public class ScoreTest
     [DataRow(21, 13, 1)]
     [DataRow(7, 2, 5)]
     [DataRow(18, 3, 5, 12)]
-    [DataRow(59, 7, 9, 13, 11, 7, 3, 1, 2, 10)]
-    public void SumsCardScoresTogether(int expected, params int[] cardRanks)
+    [DataRow(20, 2, 3, 3, 2, 2, 3, 1, 1, 2, 1)]
+    public void GetHandScore_SumsCardScoresTogether(int expected, params int[] cardRanks)
     {
+        Card[] cardHand = new Card[cardRanks.Length];
+        for (int i = 0; i < cardHand.Length; i++)
+        {
+            cardHand[i] = new Card(cardRanks[i]);
+        }
+
+        int result = Scorer.GetHandScore(cardHand);
+
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    [DataRow(10, 10, 10)]
+    [DataRow(10, 8, 2, 9, 6)]
+    public void GetHandScore_ReturnsBustScoreOnBust(params int[] cardRanks)
+    {
+        int expected = Scorer.BustScore;
         Card[] cardHand = new Card[cardRanks.Length];
         for (int i = 0; i < cardHand.Length; i++)
         {

@@ -46,9 +46,48 @@ public class TableTest
     }
 
     [TestMethod]
-    public void EndRound_DetermineWinningHands()
+    [DataRow(-1, 21, 10, 8, DisplayName = "Player hand loses")]
+    [DataRow(1, 17, 10, 10, DisplayName = "Player hand wins")]
+    [DataRow(0, 20, 10, 10, DisplayName = "Standoff")]
+    [DataRow(-1, 21, 10, 10, 10, DisplayName = "Player hand loses due to bust")]
+    public void CompareHands_DetermineWinningHandsAndReturnsIfPlayerWins(int expected, int dealerScore, params int[] playerCardRanks)
     {
-        Assert.Fail();
+        Card[] playerHand = new Card[playerCardRanks.Length];
+        for (int i = 0; i < playerHand.Length; i++)
+            playerHand[i] = new Card(playerCardRanks[i]);
+
+        int result = Table.Current.CompareHands(dealerScore, playerHand);
+
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    [DoNotParallelize]
+    [DataRow("You won!", new int[] { 10, 7 }, new int[] { 1, 10 }, DisplayName = "Player winning")]
+    [DataRow("You lost", new int[] { 1, 10 }, new int[] { 10, 6, 3 }, DisplayName = "Player losing")]
+    [DataRow("It\'s a standoff", new int[] { 10, 8 }, new int[] { 10, 8 }, DisplayName = "Standoff")]
+    public void EndRound_AnnouncesResults(string expected, int[] dealerCardRanks, int[] playerCardRanks)
+    {
+        Card[] dealerHand = new Card[dealerCardRanks.Length];
+        for (int i = 0; i < dealerHand.Length; i++)
+            dealerHand[i] = new Card(dealerCardRanks[i]);
+        Dealer dealer = new Dealer();
+        dealer.hand = dealerHand.ToList();
+        Table.Current.dealer = dealer;
+        Card[] playerHand = new Card[playerCardRanks.Length];
+        for (int i = 0; i < playerHand.Length; i++)
+            playerHand[i] = new Card(playerCardRanks[i]);
+        Gambler player = new Gambler();
+        player.hand = playerHand.ToList();
+        Table.Current.player = player;
+
+        StringWriter stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+
+        Table.Current.EndRound();
+
+        string result = stringWriter.ToString().Trim();
+        Assert.Contains(expected, result);
     }
 
 }

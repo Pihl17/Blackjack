@@ -40,7 +40,7 @@ public class DealerTest
     }
 
     [TestMethod]
-    public void MakeDecision_HasMoreThan21Points_Stands()
+    public void MakeDecision_StandsOnBust()
     {
         bool expected = true;
         Dealer dealer = new Dealer();
@@ -105,6 +105,7 @@ public class DealerTest
     }
 
     [TestMethod]
+    [DoNotParallelize]
     [DataRow(6)]
     [DataRow(7)]
     [DataRow(9)]

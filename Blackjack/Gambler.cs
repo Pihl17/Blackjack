@@ -25,7 +25,7 @@ public class Gambler : Player
             if (inputInfo.Key == ConsoleKey.H)
             {
                 Hit(Table.Current.deck.DrawCard());
-                if (Scorer.GetHandScore(hand.ToArray()) > 21)
+                if (Scorer.GetHandScore(hand.ToArray()) == Scorer.BustScore)
                     break;
             }
             if (inputInfo.Key == ConsoleKey.C)

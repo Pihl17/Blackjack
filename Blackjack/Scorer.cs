@@ -2,7 +2,9 @@
 
 public static class Scorer
 {
-    
+
+    public const int BustScore = -1;
+
     public static int GetHandScore(Card[] cards)
     {
         SortCardHand(cards);
@@ -10,6 +12,8 @@ public static class Scorer
         foreach (Card card in cards)
         {
             totalScore.AddCardValue(card);
+            if (totalScore > 21)
+                return -1;
         }
         return totalScore;
     }

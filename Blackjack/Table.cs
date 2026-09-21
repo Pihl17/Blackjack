@@ -52,7 +52,37 @@ public class Table
 
     public void EndRound()
     {
-        throw new NotImplementedException();
+        int dealerScore = Scorer.GetHandScore(dealer.hand.ToArray());
+        int outcome = CompareHands(dealerScore, player.hand.ToArray());
+
+        switch (outcome)
+        {
+            case 1:
+                Console.WriteLine("You won!");
+                break;
+            case -1:
+                Console.WriteLine("You lost...");
+                break;
+            case 0:
+                Console.WriteLine("It\'s a standoff");
+                break;
+        }
+        
+        Console.WriteLine();
+        Console.WriteLine("---------------");
+        Console.WriteLine("Round has Ended");
+        Console.WriteLine("---------------");
+
+    }
+
+    public int CompareHands(int dealerScore, Card[] playerCards)
+    {
+        int playerScore = Scorer.GetHandScore(playerCards);
+        if (playerScore > dealerScore)
+            return 1;
+        if (playerScore < dealerScore)
+            return -1;
+        return 0;
     }
 
 }

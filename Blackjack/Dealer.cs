@@ -21,7 +21,7 @@ public class Dealer : Player
 	{
 		int score = Scorer.GetHandScore(hand.ToArray());
 
-		if (score >= 21 || score > Table.Current.highestPlayerHandScore)
+		if (score == Scorer.BustScore || score >= 21 || score > Table.Current.highestPlayerHandScore)
 		{
 			WillStand = true;
 			return;
