@@ -12,7 +12,50 @@ public class TableTest
         var result = Table.Current;
         Assert.IsInstanceOfType<Table>(result);
     }
-    
+
+    [TestMethod]
+    [DoNotParallelize]
+    public void Welcome_AllowForRepeatedPlay()
+    {
+        int expectedStarts = 3;
+        Mock<Gambler> mockPlayer = new Mock<Gambler>();
+        mockPlayer.Setup(player => player.StartTurn());
+        mockPlayer.Setup(player => player.MakeBet());
+        Mock<Input> mockInput = new Mock<Input>();
+        mockInput.SetupSequence(input => input.ReadKey())
+            .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
+            .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
+            .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
+            .Returns(new ConsoleKeyInfo('n', ConsoleKey.N, false, false, false))
+            .Throws(new InvalidOperationException());
+        Table.Current.player = mockPlayer.Object;
+        Table.Current.input = mockInput.Object;
+
+        Table.Current.Welcome();
+
+        mockPlayer.Verify(player => player.StartTurn(), Times.Exactly(expectedStarts));
+    }
+
+    [TestMethod]
+    [DoNotParallelize]
+    public void Welcome_PlayerEndsRoundWithZeroChipsLeft_AutoQuit()
+    {
+        Mock<Gambler> mockPlayer = new Mock<Gambler>(new object[] { 0, 0 });
+        mockPlayer.Setup(player => player.StartTurn());
+        mockPlayer.Setup(player => player.MakeBet());
+        Mock<Input> mockInput = new Mock<Input>();
+        mockInput.SetupSequence(input => input.ReadKey())
+            .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
+            .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
+            .Throws(new InvalidOperationException());
+        Table.Current.player = mockPlayer.Object;
+        Table.Current.input = mockInput.Object;
+
+        Table.Current.Welcome();
+
+        mockPlayer.Verify(player => player.StartTurn(), Times.AtMostOnce());
+    }
+
     [TestMethod]
     public void StartRound_DealsOutStartHands()
     {

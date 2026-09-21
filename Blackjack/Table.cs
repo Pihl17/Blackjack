@@ -16,6 +16,7 @@ public class Table
 
     public const float WinMultiplierDefault = 2f;
 
+    public Input input = new Input();
     public CardDeck deck;
     public Dealer dealer;
     public Gambler player;
@@ -29,6 +30,11 @@ public class Table
         player = new Gambler();
         player.OnTurnEnding += StartDealersTurn;
         dealer.OnTurnEnding += EndRound;
+    }
+    
+    public void Welcome()
+    {
+
     }
 
     public void StartRound()
