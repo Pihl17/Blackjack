@@ -61,6 +61,17 @@ public class Table
 
     public void EndRound()
     {
+        DetermineRoundOutcome();
+        
+        Console.WriteLine();
+        Console.WriteLine("---------------");
+        Console.WriteLine("Round has Ended");
+        Console.WriteLine("---------------");
+
+    }
+
+    public void DetermineRoundOutcome()
+    {
         int dealerScore = Scorer.GetHandScore(dealer.hand.ToArray());
         int outcome = CompareHands(dealerScore, player.hand.ToArray());
 
@@ -77,12 +88,6 @@ public class Table
                 Console.WriteLine("It\'s a standoff");
                 break;
         }
-        
-        Console.WriteLine();
-        Console.WriteLine("---------------");
-        Console.WriteLine("Round has Ended");
-        Console.WriteLine("---------------");
-
     }
 
     public int CompareHands(int dealerScore, Card[] playerCards)
