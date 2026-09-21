@@ -52,26 +52,73 @@ public class Gambler : Player
         Stand();
     }
 
-    public void MakeBet()
+    public void PrintChipAmount()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("You have " + Chips + " chips to bet with.");
+    }
+
+    public virtual void MakeBet()
+    {
+        while (true)
+        {
+            if (SetBet())
+                break;
+        }
+    }
+
+    bool SetBet()
+    {
+        PrintChipAmount();
+        Console.WriteLine("Please type in the number of chips you want to bet and press ENTER");
+        string? inputLine = input.ReadLine();
+        if (int.TryParse(inputLine, out int inputNumber))
+        {
+            if (inputNumber < 0)
+            {
+                Console.WriteLine("The bet cannot be negative");
+                return false;
+            }
+            if (inputNumber == 0)
+            {
+                Console.WriteLine("The bet must be a non-zero value");
+                return false;
+            }
+            
+            if (inputNumber > Chips)
+            {
+                inputNumber = Chips;
+                Console.WriteLine("Cannot exceed your amount of chips - Setting the bet to " + inputNumber);
+            }
+            Chips -= inputNumber;
+            Bet = inputNumber;
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Invalid input - Please input a valid number");
+        }
+        return false;
     }
 
     public void WinBet(float multiplier)
     {
-        throw new NotImplementedException();
+        int prizeChips = (int)MathF.Floor(Bet * multiplier);
+        Chips += prizeChips;
+        Bet = 0;
+        Console.WriteLine("You received " + prizeChips + " from your bet (" + multiplier.ToString("F2") + "x your bet)\nMaking your chips total " + Chips);
     }
 
     public void LoseBet()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("The table took the " + Bet + " chips that you had bet");
+        Bet = 0;
     }
 
     public void ReturnChips()
     {
-        throw new NotImplementedException();
+        Chips += Bet;
+        Bet = 0;
+        Console.WriteLine("Your chips have been returned to you\nBringing you back to a chips total of " + Chips);
     }
-
-
 
 }

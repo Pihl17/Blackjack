@@ -21,6 +21,7 @@ public class TableTest
 
         Mock<Gambler> mockPlayer = new Mock<Gambler>();
         mockPlayer.Setup(player => player.StartTurn());
+        mockPlayer.Setup(player => player.MakeBet());
 
         Table.Current.player = mockPlayer.Object;
 

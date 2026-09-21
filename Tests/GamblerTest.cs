@@ -82,6 +82,21 @@ public class GamblerTest
     }
 
     [TestMethod]
+    [DataRow("89", 89)]
+    public void PrintChipAmount_PrintsCorrectAmountOfChips(string expected, int amount)
+    {
+        Gambler gambler = new Gambler(amount, 0);
+
+        StringWriter stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+
+        gambler.PrintChipAmount();
+
+        string result = stringWriter.ToString().Trim();
+        Assert.Contains(expected, result);
+    }
+
+    [TestMethod]
     public void MakeBet_RemovesBetChipsFromChipPool()
     {
         int expected = 80;
@@ -95,7 +110,7 @@ public class GamblerTest
     }
 
     [TestMethod]
-    public void MakeBet_AddsBetToBetVariable()
+    public void MakeBet_SetsBetAmount()
     {
         int expected = 15;
         Mock<Input> mock = new Mock<Input>();
@@ -134,12 +149,13 @@ public class GamblerTest
     }
 
     [TestMethod]
+    [DoNotParallelize]
     [DataRow("ad", "Invalid input - Please input a valid number", DisplayName = "text input")]
     [DataRow("two", "Invalid input - Please input a valid number", DisplayName = "text number input")]
     [DataRow("t 20", "Invalid input - Please input a valid number", DisplayName = "text and number input")]
-    [DataRow("-31", "Cannot be negative", DisplayName = "Negative number")]
-    [DataRow("0", "Must be higher than zero", DisplayName = "Zero")]
-    [DataRow(null, "Please input a number", DisplayName = "Empty line")]
+    [DataRow("-31", "cannot be negative", DisplayName = "Negative number")]
+    [DataRow("0", "must be a non-zero value", DisplayName = "Zero")]
+    [DataRow(null, "Invalid input - Please input a valid number", DisplayName = "Empty line")]
     public void MakeBet_InvalidInput_DeniedAndCausesRetry(string? invalidInput, string expectedUserMessage)
     {
         int expectedCalls = 2;

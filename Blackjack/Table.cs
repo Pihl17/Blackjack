@@ -13,7 +13,9 @@ public class Table
             return current;
         }
     }
-    
+
+    public const float WinMultiplierDefault = 2f;
+
     public CardDeck deck;
     public Dealer dealer;
     public Gambler player;
@@ -34,6 +36,9 @@ public class Table
         Console.WriteLine("-----------");
         Console.WriteLine("Round Start");
         Console.WriteLine("-----------\n");
+
+        player.MakeBet();
+        Console.WriteLine();
 
         deck.Shuffle();
         DealStartHands();
@@ -80,12 +85,15 @@ public class Table
         {
             case 1:
                 Console.WriteLine("You won!");
+                player.WinBet(WinMultiplierDefault);
                 break;
             case -1:
                 Console.WriteLine("You lost...");
+                player.LoseBet();
                 break;
             case 0:
                 Console.WriteLine("It\'s a standoff");
+                player.ReturnChips();
                 break;
         }
     }
