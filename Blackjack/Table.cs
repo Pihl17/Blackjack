@@ -35,6 +35,28 @@ public class Table
     public void Welcome()
     {
 
+        while (true)
+        {
+            player.PrintChipAmount();
+            Console.WriteLine("Wanna play another game? (Y/N)");
+            ConsoleKeyInfo inputInfo = input.ReadKey();
+            if (inputInfo.Key == ConsoleKey.Y)
+            {
+                StartRound();
+            }
+            if (inputInfo.Key == ConsoleKey.N)
+            {
+                break;
+            }
+            if (player.Chips <= 0)
+            {
+                Console.WriteLine("You have run out of chips and cannot play anymore.");
+                break;
+            }
+        }
+
+        Console.WriteLine("\nYou ended with " + player.Chips + " chips");
+        Console.WriteLine("Thank you for playing");
     }
 
     public void StartRound()
@@ -51,8 +73,10 @@ public class Table
         player.StartTurn();
     }
 
-    void DealStartHands()
+    public void DealStartHands()
     {
+        player.hand.Clear();
+        dealer.hand.Clear();
         Console.WriteLine("Dealing out start hands:");
         player.Hit(deck.DrawCard());
         dealer.Hit(deck.DrawCard());

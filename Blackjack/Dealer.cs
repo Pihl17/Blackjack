@@ -11,6 +11,7 @@ public class Dealer : Player
 
 	public void StartTurn()
 	{
+		WillStand = false;
 		while (!WillStand)
 		{
 			MakeDecision();

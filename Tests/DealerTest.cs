@@ -90,6 +90,7 @@ public class DealerTest
     }
     
     [TestMethod]
+    [DoNotParallelize]
     public void MakeDecision_HasLessThan17Points_Hits()
     {
         Dealer dealer = new Dealer();
