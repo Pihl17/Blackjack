@@ -81,4 +81,139 @@ public class GamblerTest
         mockInput.Verify(i => i.ReadKey(), Times.Once());
     }
 
+    [TestMethod]
+    public void MakeBet_RemovesBetChipsFromChipPool()
+    {
+        int expected = 80;
+        Mock<Input> mock = new Mock<Input>();
+        mock.Setup(i => i.ReadLine()).Returns("20");
+        Gambler gambler = new Gambler(mock.Object);
+
+        gambler.MakeBet();
+
+        Assert.AreEqual(expected, gambler.Chips);
+    }
+
+    [TestMethod]
+    public void MakeBet_AddsBetToBetVariable()
+    {
+        int expected = 15;
+        Mock<Input> mock = new Mock<Input>();
+        mock.Setup(i => i.ReadLine()).Returns("15");
+        Gambler gambler = new Gambler(mock.Object);
+
+        gambler.MakeBet();
+
+        Assert.AreEqual(expected, gambler.Bet);
+    }
+
+    [TestMethod]
+    public void MakeBet_MoreThanPlayerHasInPool_TakeNoMoreThanPlayerHas()
+    {
+        int expected = 0;
+        Mock<Input> mock = new Mock<Input>();
+        mock.Setup(i => i.ReadLine()).Returns("140");
+        Gambler gambler = new Gambler(mock.Object);
+
+        gambler.MakeBet();
+
+        Assert.AreEqual(expected, gambler.Chips);
+    }
+
+    [TestMethod]
+    public void MakeBet_MoreThanPlayerHasInPool_AddNoMoreToBetThanPlayerHad()
+    {
+        int expected = 100;
+        Mock<Input> mock = new Mock<Input>();
+        mock.Setup(i => i.ReadLine()).Returns("250");
+        Gambler gambler = new Gambler(mock.Object);
+
+        gambler.MakeBet();
+
+        Assert.AreEqual(expected, gambler.Bet);
+    }
+
+    [TestMethod]
+    [DataRow("ad", "Invalid input - Please input a valid number", DisplayName = "text input")]
+    [DataRow("two", "Invalid input - Please input a valid number", DisplayName = "text number input")]
+    [DataRow("t 20", "Invalid input - Please input a valid number", DisplayName = "text and number input")]
+    [DataRow("-31", "Cannot be negative", DisplayName = "Negative number")]
+    [DataRow("0", "Must be higher than zero", DisplayName = "Zero")]
+    [DataRow(null, "Please input a number", DisplayName = "Empty line")]
+    public void MakeBet_InvalidInput_DeniedAndCausesRetry(string? invalidInput, string expectedUserMessage)
+    {
+        int expectedCalls = 2;
+        string validInput = "5";
+        Mock<Input> mock = new Mock<Input>();
+        mock.SetupSequence(i => i.ReadLine())
+            .Returns(invalidInput)
+            .Returns(validInput)
+            .Throws(new ArgumentException("The supposed valid input failed to be accepted by the method."));
+        Gambler gambler = new Gambler(mock.Object);
+
+        StringWriter stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+
+        gambler.MakeBet();
+
+        string consoleOutput = stringWriter.ToString().Trim();
+        Assert.Contains(expectedUserMessage, consoleOutput);
+        mock.Verify(i => i.ReadLine(), Times.Exactly(expectedCalls));
+    }
+
+    [TestMethod]
+    [DataRow(10, 2f, 20)]
+    public void WinBet_GivesMoreBetToChipPool(int betAmount, float multiplier, int expected)
+    {
+        Gambler gambler = new Gambler(0, betAmount);
+
+        gambler.WinBet(multiplier);
+
+        Assert.AreEqual(expected, gambler.Chips);
+    }
+
+    [TestMethod]
+    public void WinBet_ResetsBetValue()
+    {
+        int expected = 0;
+        Gambler gambler = new Gambler(100, 20);
+
+        gambler.WinBet(1f);
+        
+        Assert.AreEqual(expected, gambler.Bet);
+    }
+
+    [TestMethod]
+    public void LoseBet_RemovesChipsFromBet()
+    {
+        int expected = 0;
+        Gambler gambler = new Gambler(100, 20);
+
+        gambler.LoseBet();
+        
+        Assert.AreEqual(expected, gambler.Bet);
+    }
+
+    [TestMethod]
+    public void ReturnChips_ReturnsBetToChipPool()
+    {
+        int expected = 100;
+        Gambler gambler = new Gambler(80, 20);
+
+        gambler.ReturnChips();
+
+        Assert.AreEqual(expected, gambler.Chips);
+    }
+
+    [TestMethod]
+    public void ReturnChips_ResetsBetValue()
+    {
+        int expected = 0;
+        Gambler gambler = new Gambler(70, 30);
+
+        gambler.ReturnChips();
+
+        Assert.AreEqual(expected, gambler.Bet);
+    }
+
 }

@@ -8,4 +8,9 @@ public class Input
         return Console.ReadKey(true);
     }
 
+    public virtual string? ReadLine()
+    {
+        return Console.ReadLine();
+    }
+
 }
