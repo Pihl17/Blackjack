@@ -21,13 +21,13 @@ public class Player
 
     public void Stand()
     {
-        Console.WriteLine(name + " stand with a hand value of " + Scorer.GetHandScore(hand.ToArray()));
+        Console.WriteLine(name + " stand with a hand value of " + CurrentScore());
         OnTurnEnding?.Invoke();
     }
 
     public void PrintHand()
     {
-        Console.Write(name + " current hand is: ");
+        Console.Write(name + " currently have: ");
         for (int i = 0; i < hand.Count; i++)
         {
             Console.Write(hand[i].RankName + " ");
@@ -37,13 +37,16 @@ public class Player
 
     public void PrintCurrentHandScore()
     {
-        Console.Write(name + " currently have a score of ");
+        Console.WriteLine(name + " currently have a score of " + CurrentScore());
+    }
+
+    string CurrentScore()
+    {
         int score = Scorer.GetHandScore(hand.ToArray());
         if (score == Scorer.BustScore)
-            Console.Write("Bust");
+            return "Bust";
         else
-            Console.Write(score.ToString());
-        Console.WriteLine();
+            return score.ToString();
     }
 
 }
