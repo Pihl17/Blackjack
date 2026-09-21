@@ -35,4 +35,15 @@ public class Player
         Console.WriteLine();
     }
 
+    public void PrintCurrentHandScore()
+    {
+        Console.Write(name + " currently have a score of ");
+        int score = Scorer.GetHandScore(hand.ToArray());
+        if (score == Scorer.BustScore)
+            Console.Write("Bust");
+        else
+            Console.Write(score.ToString());
+        Console.WriteLine();
+    }
+
 }

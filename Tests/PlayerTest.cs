@@ -37,5 +37,24 @@ namespace Tests
             Assert.Contains(expected, result);
         }
 
+        [TestMethod]
+        [DoNotParallelize]
+        [DataRow("21", 1, 13)]
+        [DataRow("17", 11, 3, 4)]
+        [DataRow("Bust", 10, 11, 12)]
+        public void PrintCurrentHandScore_PrintsScore(string expected, params int[] cardRanks)
+        {
+            Player player = new Player();
+            for (int i = 0; i < cardRanks.Length; i++)
+                player.hand.Add(new Card(cardRanks[i]));
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+
+            player.PrintCurrentHandScore();
+
+            string result = stringWriter.ToString().Trim();
+            Assert.Contains(expected, result);
+        }
+
     }
 }

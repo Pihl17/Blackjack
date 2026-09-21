@@ -34,6 +34,7 @@ public class Gambler : Player
             if (inputInfo.Key == ConsoleKey.C)
             {
                 PrintHand();
+                PrintCurrentHandScore();
             }
         } while (inputInfo.Key != ConsoleKey.S);
 
