@@ -30,7 +30,7 @@ If the solution haven't been built yet, the command will first build it before r
 
 ## Software Architecture
 
-The class relations are like the below diagram
+The overall architecture of the game is shown in the below diagram
 ![Class diagram](/Documentation/ClassDiagram.png)
 
 ### Table
