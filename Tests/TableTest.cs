@@ -27,6 +27,7 @@ public class TableTest
             .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
             .Returns(new ConsoleKeyInfo('y', ConsoleKey.Y, false, false, false))
             .Returns(new ConsoleKeyInfo('n', ConsoleKey.N, false, false, false))
+            .Returns(new ConsoleKeyInfo('a', ConsoleKey.A, false, false, false))
             .Throws(new InvalidOperationException());
         Table.Current.player = mockPlayer.Object;
         Table.Current.input = mockInput.Object;

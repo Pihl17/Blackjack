@@ -57,6 +57,8 @@ public class Table
 
         Console.WriteLine("\nYou ended with " + player.Chips + " chips");
         Console.WriteLine("Thank you for playing");
+        Console.WriteLine("Press any button to exit");
+        input.ReadKey();
     }
 
     public void StartRound()
