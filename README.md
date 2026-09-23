@@ -30,6 +30,8 @@ If the solution haven't been built yet, the command will first build it before r
 
 ## Software Architecture
 
+![Class diagram](/Documentation/ClassDiagram.png)
+
 Table singleton
 - Used as a global reference point that both the Gambler and Dealer classes can access, and through those access the CardDeck
 - Has the player and dealer sitting at it, and a card deck placed on it.
