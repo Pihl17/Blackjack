@@ -70,6 +70,7 @@ public class Table
         player.MakeBet();
         Console.WriteLine();
 
+        deck = new CardDeck();
         deck.Shuffle();
         DealStartHands();
         player.StartTurn();
