@@ -30,12 +30,16 @@ If the solution haven't been built yet, the command will first build it before r
 
 ## Software Architecture
 
+The class relations are like the below diagram
 ![Class diagram](/Documentation/ClassDiagram.png)
 
-Table singleton
-- Used as a global reference point that both the Gambler and Dealer classes can access, and through those access the CardDeck
-- Has the player and dealer sitting at it, and a card deck placed on it.
+### Table
+At the core is a Table singleton, which operates as a global reference point that both the Gambler and Dealer classes can access the assigned CardDeck instance through.\
+It is responsible for managing the round order and starting both the player's and dealer's turn in order. Before announcing and managing the outcome of the round.\
+It is also here that the user is asked if they want to go another round.
 
+
+### Gambler
 Gambler class
 - The player class
 - Handles the player's turn and translating input into actions during their turn
