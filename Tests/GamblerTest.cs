@@ -54,7 +54,6 @@ public class GamblerTest
     [DataRow('c', ConsoleKey.C, DisplayName = "Look at hand")]
     public void Turn_CanRunAllInputsWithoutError(char character, ConsoleKey key)
     {
-        int expected = 3;
         Mock<Input> mockInput = new Mock<Input>();
         mockInput.SetupSequence(i => i.ReadKey())
             .Returns(new ConsoleKeyInfo(character, key, false, false, false))

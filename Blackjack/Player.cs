@@ -7,14 +7,16 @@ public class Player
 
     public string name { get; protected set; }
 	public List<Card> hand = new List<Card>();
-
-	public Player() { }
-
+    
     public delegate void OnTurnEndingEvent();
-    public OnTurnEndingEvent OnTurnEnding;
+    public OnTurnEndingEvent? OnTurnEnding;
     
     public const int HitSleepTimeMilliSeconds = 100;
     public const int StandSleepTimeMilliSeconds = 500;
+
+	public Player() {
+        name = "";
+    }
 
 	public void Hit(Card card)
 	{
