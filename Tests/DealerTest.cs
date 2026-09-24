@@ -64,6 +64,7 @@ public class DealerTest
     }
 
     [TestMethod]
+    [DoNotParallelize]
     public void MakeDecision_HasMorePointsThanHighestPlayerHand_Stands()
     {
         bool expected = true;
@@ -77,6 +78,7 @@ public class DealerTest
     }
 
     [TestMethod]
+    [DoNotParallelize]
     public void MakeDecision_HasHard17PlusHand_Stands()
     {
         bool expected = true;
