@@ -16,6 +16,9 @@ public class Table
 
     public const float WinMultiplierDefault = 2f;
 
+    public const int StartHandCheckSleepTimeMilliSeconds = 500;
+    public const int RoundOutcomeAnnouncementSleepTimeMilliSeconds = 500;
+
     public Input input = new Input();
     public CardDeck deck;
     public Dealer dealer;
@@ -35,6 +38,8 @@ public class Table
     public void Welcome()
     {
 
+        Console.WriteLine("Welcome!");
+
         while (true)
         {
             player.PrintChipAmount();
@@ -51,6 +56,7 @@ public class Table
             if (player.Chips <= 0)
             {
                 Console.WriteLine("You have run out of chips and cannot play anymore.");
+                Thread.Sleep(1000);
                 break;
             }
         }
@@ -87,6 +93,7 @@ public class Table
         Console.WriteLine();
         player.PrintHand();
         dealer.PrintHand();
+        Thread.Sleep(StartHandCheckSleepTimeMilliSeconds);
     }
 
     public void StartDealersTurn()
@@ -119,14 +126,17 @@ public class Table
             case 1:
                 Console.WriteLine("You won!");
                 player.WinBet(WinMultiplierDefault);
+                Thread.Sleep(RoundOutcomeAnnouncementSleepTimeMilliSeconds);
                 break;
             case -1:
                 Console.WriteLine("You lost...");
                 player.LoseBet();
+                Thread.Sleep(RoundOutcomeAnnouncementSleepTimeMilliSeconds);
                 break;
             case 0:
                 Console.WriteLine("It\'s a standoff");
                 player.ReturnChips();
+                Thread.Sleep(RoundOutcomeAnnouncementSleepTimeMilliSeconds);
                 break;
         }
     }

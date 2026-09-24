@@ -10,7 +10,9 @@ public class Gambler : Player
     public const int StartChipAmount = 100;
     public int Chips { get; private set; } = StartChipAmount;
     public int Bet { get; private set; }
-    
+
+    public const int BettingSleepTimeMilliSeconds = 100;
+
     public Gambler() : base() {
         name = "You";
     }
@@ -32,12 +34,13 @@ public class Gambler : Player
     {
         Console.WriteLine("--------------------");
         Console.WriteLine("It is now your turn:");
+        Console.WriteLine();
         ConsoleKeyInfo inputInfo;
         do
         {
-            Console.WriteLine();
             PrintHand();
             PrintCurrentHandScore();
+            Console.WriteLine();
             Console.WriteLine("\nOptions:\nH - hit\nS - Stand\n");
             
             inputInfo = input.ReadKey();
@@ -63,6 +66,7 @@ public class Gambler : Player
         {
             if (SetBet())
                 break;
+            Thread.Sleep(BettingSleepTimeMilliSeconds);
         }
     }
 
@@ -88,6 +92,7 @@ public class Gambler : Player
             {
                 inputNumber = Chips;
                 Console.WriteLine("Cannot exceed your amount of chips - Setting the bet to " + inputNumber);
+                Thread.Sleep(BettingSleepTimeMilliSeconds);
             }
             Chips -= inputNumber;
             Bet = inputNumber;

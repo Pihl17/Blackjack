@@ -12,16 +12,21 @@ public class Player
 
     public delegate void OnTurnEndingEvent();
     public OnTurnEndingEvent OnTurnEnding;
+    
+    public const int HitSleepTimeMilliSeconds = 100;
+    public const int StandSleepTimeMilliSeconds = 500;
 
 	public void Hit(Card card)
 	{
 		hand.Add(card);
 		Console.WriteLine(name + " have been dealt a " + card.RankName);
+        Thread.Sleep(HitSleepTimeMilliSeconds);
 	}
 
     public void Stand()
     {
         Console.WriteLine(name + " stand with a hand value of " + CurrentScore());
+        Thread.Sleep(StandSleepTimeMilliSeconds);
         OnTurnEnding?.Invoke();
     }
 
