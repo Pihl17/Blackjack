@@ -33,7 +33,7 @@ If the solution haven't been built yet, the command will first build it before r
 
 ## Software Architecture
 
-The overall architecture of the game is shown in the below UML class diagram
+The overall architecture of the game is shown in the below UML class diagram\
 ![Class diagram](/Documentation/ClassDiagram.png)
 
 ### The Table singleton
@@ -54,7 +54,7 @@ It also contains the number of chips the user has, and is responsible for handli
 While the Dealer class, which also inherits from Player, represents the dealer at the table.
 Handling the dealer's decision making during their turn.
 The dealer will draw cards until they either beat the user's hand, or they have a hand with a score of 17 or higher without any Aces counting as 11. 
-The UML graph below shows the activity of the dealer's decision making
+The UML graph below shows the activity of the dealer's decision making\
 ![Activity diagram over the dealer's decision making](/Documentation/DealersDecisionMaking.png)
 
 ### Card struct and CardDeck class
